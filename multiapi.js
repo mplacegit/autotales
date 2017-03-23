@@ -1,4 +1,4 @@
-window.colorTrailer = true; 
+window.colorTrailer = true;  
 (function() {
     function async_load(z,args){
 
@@ -18,8 +18,8 @@ window.colorTrailer = true;
 	try{
 	
 	function defaultFunctionReplay(config){
-
-	window.colorPixels.overTvigle(); 
+    console.log('непрогрузилось'); 
+	//window.colorPixels.overTvigle(); 
 
 	}
 	function parseConfig() 
@@ -34,7 +34,7 @@ window.colorTrailer = true;
 	var c_data=parseConfig();
 	if(typeof c_data.pid=='undefined')
 	{
-		c_data={pid:"20",affiliate_id:"56015401b3da9",h1:"IPHONE 7"}; 
+		c_data={pid:"26",affiliate_id:"56015401b3da9",h1:"IPHONE 7",index:"broadcast"}; 
 	}
 	else
 	{
@@ -43,6 +43,10 @@ window.colorTrailer = true;
 
 	 var config=new Configurator({auth:{affiliate_id:c_data.affiliate_id,pid:c_data.pid},successFn:function(config){
 	 window.colorPixels = new multiDispatcher();
+	 
+	 
+	 console.log([18,config]); 
+	 config.index=c_data.index;
 	 window.colorPixels.setConfig(config,defaultFunctionReplay);
      }});
 	

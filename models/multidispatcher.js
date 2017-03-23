@@ -2,6 +2,9 @@
 var httpclient = require('./httpclient');
 var VASTPlayer = require('vast-player');
 var CookieDriver = require('./CookieDriver');
+var BridgeLib = require('./iFrameBridge');
+window.Bridge=BridgeLib.Bridge;
+window.CallAction=BridgeLib.callAction;
 
 function renderControl(type,args) {
     //console.log([888888,args]);
@@ -121,6 +124,8 @@ this.config=config;
 this.pid=config.pid;
 this.affiliate_id=config.affiliate_id;
 this.links=config.ads;
+this.bridge=new Bridge(config.index);
+
 //console.log([318,config.ads]);
 if(typeof config.referer !="undefined"){
 this.referer=config.referer;
@@ -159,7 +164,6 @@ multidispatcher.prototype.pushQueue = function pushQueue(ind) {
 	 }
    return;
   }
-    
     this.cacheloadedIndexes[ind]=0;
     var uri = this.links[ind].src.replace(/\{([a-z]+)\}/g, function(match)
     {
@@ -174,7 +178,7 @@ multidispatcher.prototype.pushQueue = function pushQueue(ind) {
 	}
     return match;
     });
-   // console.log([400,uri]);
+    
 
 	self.sendStatistic({id:self.links[ind].id,eventName:'srcRequest'});  
 	window.MPOverControl.CurrentLoadedXmlIndex=self.links[ind].id;
@@ -256,6 +260,12 @@ multidispatcher.prototype.startPlayQueue = function startPlayQueue() {
  this.plSettings=myPlayerSettings;
  this.queueToPlaySemaphore=1;
  this.reporter=self.resourcesToPlay[index];
+ console.log(this.reporter.reporter);
+ this.reporter.reporter.PlayToBridge=function(type,arr){
+ console.log([1222,type,arr,self.config.index]);
+ CallAction('adEvent',{index:self.config.index,eventName:type},window.parent);
+ }
+ 
    this.clearExtraSlot();
    this.container.innerHTML='';
       
