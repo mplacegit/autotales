@@ -7,7 +7,6 @@ window.Bridge=BridgeLib.Bridge;
 window.CallAction=BridgeLib.callAction;
 function $notifyObservers(event) {
         (this.subscribers[event.type] || []).forEach(function (item) {
-		//console.log([123,item.ctx,event.data]); 
 		       item.fn.call(item.ctx, event.data);
         });
 }
@@ -18,14 +17,16 @@ function $mediaEventHandler(event) {
         if(event.type == VideoEvent.AD_ERROR) {
         params.ERRORCODE = event.data.code;
         }
-		 //event.data.loadedEvent = loadEvents(this.xmlLoader, event.type, params);
-    
-        if(event.type !== VideoEvent.AD_STOP) {
+		 //event.data.loadedEvent = loadEvents(this.xmlLoader, event.type, params); 
 		
-            $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(event.type), event.data));
+        if(event.type !== VideoEvent.AD_STOP) {
+		    $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(event.type), event.data));
         }
 		else{
 		
+		
+		this.parameters.slot.parentNode.removeChild(this.parameters.slot);
+		    $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(event.type), null));
 		}
 		/*
        
@@ -75,10 +76,41 @@ var VideoPlayer = function VideoPlayer() {
             canSendEvent: true,
             middleEvent: [false, false, false, false, false]
         };
+		var self = this;
+		this.bridge=new Bridge(); 
+		this.index=this.bridge.index;
+		this.bridge.addAction("adEvent",function(data){
+		if(data.hasOwnProperty("eventName")){
+		switch (data.eventName){
+		case "MyVastEnded":
+		console.log(["пришло окончательное событие",data.eventName]); 
+		self.stop();
+		break;
+        case "mute":
+		//console.log(["пришло событие","volumeChange",0]); 
+		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_MUTE, self.getMetaData());
+	    break;
+		case "complete":
+		break;
+		case "error":
+		
+		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
+		break;
+		default:
+		//console.log(["пришло событие  775544 ",data.eventName,data]);  
+		var tl=VPAIDEvent.convertFromVAST(data.eventName);
+		VideoPlayer.$dispatchEvent.call(self, data.eventName, self.getMetaData());
+		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(data.eventName),data));
+		 
+		break;
+		}
+		}
+		});
+		
     };
     VideoPlayer.prototype.init = function init(data, dispatcher, context) {
         if (this.flags.inited) {
-            return
+            return;
         }
         this.flags.inited = true;
         this.parent = {
@@ -151,6 +183,11 @@ var VideoPlayer = function VideoPlayer() {
     VideoPlayer.prototype.getMetaData = function getMetaData() {
         return {};
     };
+	VideoPlayer.prototype.stop = function stop() {
+	console.log("kontrolog"); 
+	VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_STOP, this.getMetaData());
+	//console.log("остановка ресурса !!!!");
+	}
     VideoPlayer.prototype.play = function play() {
         if (this.flags.started || this.flags.stopped) {
             return;
@@ -163,15 +200,25 @@ var VideoPlayer = function VideoPlayer() {
         iframe.style.display = 'block';
         iframe.style.border = 'none';
 		istyle.innerHTML = ' video{display:none !important} ';
-		iframe.src='http://www.apptoday.ru/videowidget/autoplay/autoplay.html?affiliate_id=56015401b3da9&pid=26';
+			/*		if(self.hasOwnProperty('ownWidth_') && self.hasOwnProperty('ownHeight_')){
+			vpaid.ownWidth_=self.ownWidth_;
+			vpaid.ownWidth_=self.ownHeight_;
+			//console.log([3455,'gotov']);
+			} */
+	//	console.log([34446,"алгебраи",this.parent.context.parameters.size.width,this.parent.context.parameters.size.height]);
+		iframe.src='http://apptoday.ru/autogit/autotales/autoplay.html?index='+this.index+'&affiliate_id=56015401b3da9&pid=26&width='+this.parent.context.parameters.size.width+'&height='+this.parent.context.parameters.size.height;
+		
+		//alert(iframe.src);
+		//iframe.src='http://www.apptoday.ru/videowidget/autoplay/autoplay.html?affiliate_id=56015401b3da9&pid=26';
 		//this.parent.context.parameters.slot.innerHTML='';
 		VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_START, this.getMetaData());
         VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_IMPRESSION, this.getMetaData());
+		
 		this.parent.context.parameters.slot.appendChild(istyle); 
 		this.parent.context.parameters.slot.appendChild(iframe); 
         //console.log(['слот контекст',this.parent.context.parameters.slot]);
         
-		
+		//
 		
 		
 		//$notifyObservers.call(this.parent.context, new VPAIDEvent(VPAIDEvent.AdStarted, {}));
@@ -248,7 +295,7 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
         if(!this.flags.stopped) {
             this.flags.stopped = true;
 			
-           // this.mediaPlayer.stop();
+          // this.mediaPlayer.stop();
         }
     };
     VPAIDInterface.prototype.skipAd = function () {
@@ -323,9 +370,11 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
         }
         for (var i = 0, max = events.length; i < max; i++) {
             var event = events[i];
+			
             if (!this.subscribers[event]) {
                 this.subscribers[event] = [];
             }
+			 // console.log(['salute - 2',event]);
             this.subscribers[event].push({fn: handler, ctx: context || null});
         }
     };

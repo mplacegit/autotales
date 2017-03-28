@@ -19,6 +19,7 @@ function callAction(name,data,window) {
     // посылает сообщение для указанного window.
 
     // action содержит в себе имя события и данные для развертывания
+	
     window.postMessage({name:name,data:data,bridgeAction:true},'*');
 }
 function getUniqueIndex(){

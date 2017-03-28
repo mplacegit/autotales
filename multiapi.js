@@ -18,9 +18,9 @@ window.colorTrailer = true;
 	try{
 	
 	function defaultFunctionReplay(config){
-    console.log('непрогрузилось'); 
+    //console.log('непрогрузилось'); 
 	//window.colorPixels.overTvigle(); 
-
+    CallAction('adEvent',{index:window.colorPixels.config.index,eventName:"MyVastEnded"},window.parent);
 	}
 	function parseConfig() 
     {
@@ -43,7 +43,7 @@ window.colorTrailer = true;
 
 	 var config=new Configurator({auth:{affiliate_id:c_data.affiliate_id,pid:c_data.pid},successFn:function(config){
 	 window.colorPixels = new multiDispatcher();
-	 
+	         
 	 
 	 console.log([18,config]); 
 	 config.index=c_data.index;
