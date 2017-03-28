@@ -563,10 +563,11 @@ multidispatcher.prototype.pushQueue = function pushQueue(ind) {
 	
 	player.loadNew(uri).then(function getLoad(res){
 	console.log([4001,'плеер загрузился',res,self.links[ind].title]);
+	self.cacheloadedIndexes[ind]=1;
 	self.startPlayQueue(player);
 	}).catch(function emitError(reason) {
 	console.log([4001,'плеер не загрузился',reason,self.links[ind].title]);
-	
+	self.cacheloadedIndexes[ind]=3;
 	self.pushQueue((ind+1)); 
 	});
 }; 
@@ -656,7 +657,14 @@ multidispatcher.prototype.startPlayQueue = function startPlayQueue(player) {
 		player.once('AdStopped', function() {
 	              self.queueToPlaySemaphore=0; 
                   console.log([95558,'Плеер закончился!',self.currentIndexListen,self.links[player.__private__.index].title]);
-				  if(self.currentIndexListen){ self.readyToPlayThird(); return; }
+				  if(self.currentIndexListen){ self.readyToPlayThird(); return; 
+				   }else{
+				 // self.checkLoadedQueue(); 
+				  console.log([955887,self.links.length]);
+				  if(self.checkLoadedQueue()){
+				    self.readyToPlayThird(); return; 
+				  }
+				  }
         });
 		player.once('AdError', function(reason) {
 				    var mess = '';
@@ -672,7 +680,7 @@ multidispatcher.prototype.startPlayQueue = function startPlayQueue(player) {
 			    });	
    player._reporter.PlayToBridge=function(type,arr){
    self.sendStatistic({id:self.links[player.__private__.index].id,eventName:type,mess:''}); 
-   console.log([11234,"всё --- ",type]);
+   //console.log([11234,"всё --- ",type]);
    switch(type){
    case "firstQuartile":
    //console.log([122223,player.hasOwnProperty("_ownTimer")]);
