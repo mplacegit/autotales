@@ -277,7 +277,7 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
         this.flags.inited = true;
 		var data = JSON.parse(creativeData.AdParameters || "{}"); 
 		
-			
+			console.log([2301,data]); 
 		
         if (!data.hasOwnProperty("affiliate_id")) {
         return $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdError, "Missing mandatory parameters \"affiliate_id\" in AdParameters"));
@@ -289,7 +289,7 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
 		var pid=data.pid;
 		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "Олерт - hello "+affiliate_id+" / "+pid));
         //environmentVars.slot.innerHTML='это всё афёры. не верьте граждане';
-		console.log([2301,data]);
+		
 		 this.parameters.size = {
             width: width,
             height: height
