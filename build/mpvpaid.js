@@ -278,8 +278,8 @@ console.log(["началось"]);
         }
         this.flags.inited = true;
 		var data = JSON.parse(creativeData.AdParameters || "{}"); 
-		
-			console.log([2301,data]); 
+		console.log([2301,data]);
+	
 		
         if (!data.hasOwnProperty("affiliate_id")) {
         return $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdError, "Missing mandatory parameters \"affiliate_id\" in AdParameters"));

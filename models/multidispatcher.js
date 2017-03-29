@@ -123,6 +123,8 @@ multidispatcher.prototype.setConfig = function setConfig(config,collbackFunction
 
 this.collbackFunction=collbackFunction;
 
+
+
 if(!config.hasOwnProperty('adslimit'))
 config.adslimit=3;   
 this.config=config;
@@ -166,6 +168,8 @@ multidispatcher.prototype.pushQueue = function pushQueue(ind) {
  }
  return;
  }
+ 
+  //console.log([23455,typeof this.links[ind],'волк тоже 1']); 
    var self=this; 
    if(typeof this.links[ind]=='undefined'){
    this.currentIndexListen=1; 
@@ -202,9 +206,8 @@ multidispatcher.prototype.pushQueue = function pushQueue(ind) {
     //console.log([400,uri]);
 	//uri='http://apptoday.ru/videowidget/src/test.xml'; 
 	//uri='https://apptoday.ru/autogit/1.php';
-	function TimerFunction(args){
-	}
-	var player = new VASTPlayer(document.getElementById("container"),{timerFunc:TimerFunction});
+
+	var player = new VASTPlayer(document.getElementById("container"),{timerFunc:function(){}});
 	
 	player.linkIndex=ind;
 	self.sendStatistic({id:self.links[ind].id,eventName:'srcRequest'});  
@@ -726,16 +729,15 @@ this.slot=null;
 };
 multidispatcher.prototype.readyToPlayThird=function readyToPlayThird(){
 if(this.thirdPartyFlag) return;
-
-this.thirdPartyFlag=1;
+   
+  this.thirdPartyFlag=1;
    this.clearExtraSlot();
+ 
    this.container.innerHTML='';
    this.container.style.display='none';
    if(typeof this.collbackFunction =='function'){
-
-   // console.log("переход");
+   console.log("переход 2");
    this.collbackFunction(this.config);
-
    }
 };
 multidispatcher.prototype.sendStatistic = function sendStatistic(data) 
