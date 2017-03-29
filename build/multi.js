@@ -6097,6 +6097,7 @@ var VPAIDVersion = require('../VPAIDVersion');
 function JavaScriptVPAID() {
     VPAID.apply(this, arguments); // call super()
     this.frame = null;
+	this.playDelay=1;
 }
 inherits(JavaScriptVPAID, VPAID);
 
@@ -6133,7 +6134,19 @@ JavaScriptVPAID.prototype.load = function load(mediaFiles, parameters) {
                 reject(reason);
             }
         }
-
+        function setCheckLoadedTime(cnt){
+		if(!self.playDelay) return;
+		console.log([123,cnt,self.playDelay,"log vpaid"]);
+		if(cnt>0){
+		setTimeout(function(){
+		setCheckLoadedTime((cnt-1))
+		}, 1000);
+		return;
+		}
+		cleanup(new Error("vpaid не загрузился в течении 7 сек"));  
+		}
+		setCheckLoadedTime(7);
+		
         iframe.src = 'about:blank';
         iframe.style.width = '100%';
         iframe.style.height = '100%';
@@ -6204,6 +6217,7 @@ JavaScriptVPAID.prototype.load = function load(mediaFiles, parameters) {
                 }, event);
             });
             self.once(EVENTS.AdLoaded, function onAdLoaded() {
+			    self.playDelay=0;
 			    iframe.style.opacity = '1';
                 self.api = vpaid;
                 resolve(self);
