@@ -160,19 +160,8 @@ var VideoPlayer = function VideoPlayer() {
         iframe.style.display = 'block';
         iframe.style.border = 'none';
 		istyle.innerHTML = ' video{display:none !important} ';
-				this.parameters.pid = pid;
-        this.parameters.affiliate_id = affiliate_id; 
-			/*		if(self.hasOwnProperty('ownWidth_') && self.hasOwnProperty('ownHeight_')){
-			vpaid.ownWidth_=self.ownWidth_;
-			vpaid.ownWidth_=self.ownHeight_;
-			//console.log([3455,'gotov']);
-			} */
-	//	console.log([34446,"алгебраи",this.parent.context.parameters.size.width,this.parent.context.parameters.size.height]);
 		iframe.src='http://apptoday.ru/autogit/autotales/autoplay.html?index='+this.index+'&affiliate_id='+this.parent.context.parameters.affiliate_id+'&pid='+this.parent.context.parameters.pid+'&width='+this.parent.context.parameters.size.width+'&height='+this.parent.context.parameters.size.height;
 		
-		//alert(iframe.src);
-		//iframe.src='http://www.apptoday.ru/videowidget/autoplay/autoplay.html?affiliate_id=56015401b3da9&pid=26';
-		//this.parent.context.parameters.slot.innerHTML='';
 		VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_START, this.getMetaData());
         VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_IMPRESSION, this.getMetaData());
 		
@@ -222,7 +211,7 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
 		var pid=data.pid;
 		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "Олерт - hello "+affiliate_id+" / "+pid));
         //environmentVars.slot.innerHTML='это всё афёры. не верьте граждане';
-		//console.log([2301,environmentVars.slot]);
+		console.log([2301,data.pid]);
 		 this.parameters.size = {
             width: width,
             height: height
