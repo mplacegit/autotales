@@ -106,50 +106,10 @@ function $mediaEventHandler(event) {
 		this.parameters.slot.parentNode.removeChild(this.parameters.slot);
 		    $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(event.type), null));
 		}
-		/*
-       
-        else {
-            this.parameters.adParameters.url = getNextBlockUrl.call(this.parameters.adParameters);
-
-            this.flags.started = false;
-            this.flags.stopped = false;
-
-            this.xmlLoader = new XMLLoader();
-            this.xmlLoader.load(this.parameters.adParameters.url, function (err, result) {
-                if (err) {
-                    setTimeout(function(){
-                        $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(event.type), event.data));
-                        this.parameters.slot.parentNode.removeChild(this.parameters.slot);
-                    }.bind(this), 1300);
-                    return;
-                }
-
-                var MediaPlayer;
-                if (result.type == "VideoPlayer") {
-                    MediaPlayer = VideoPlayer;
-                }
-                else {
-                    MediaPlayer = result.type == "VPAIDPlayer" ? VPAIDPlayer : "Unknown";
-                }
-
-                if (typeof MediaPlayer != "function") {
-                    loadEvents(this.xmlLoader, "error", {ERRORCODE: 403});
-                    return $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdError, "Unknown mediaType \"" + result.type + "\""));
-                }
-
-                this.mediaPlayer = new MediaPlayer(this.parameters.slot);
-                this.mediaPlayer.init({
-                    mediapath: this.parameters.adParameters["mediapath"],
-                    xmlLoader: this.xmlLoader
-                }, $mediaEventHandler, this);
-            }.bind(this));
-        }
-		*/
+		
 }
 var VideoPlayer = function VideoPlayer() {
-        // this.root = root.appendChild(bo[ma]("div"));
-         //this.root.id = "wb-video-player";
-        //  this.root.className = "waiting";
+
         this.flags = {
             canSendEvent: true,
             middleEvent: [false, false, false, false, false]
@@ -278,13 +238,15 @@ var VideoPlayer = function VideoPlayer() {
         iframe.style.display = 'block';
         iframe.style.border = 'none';
 		istyle.innerHTML = ' video{display:none !important} ';
+				this.parameters.pid = pid;
+        this.parameters.affiliate_id = affiliate_id; 
 			/*		if(self.hasOwnProperty('ownWidth_') && self.hasOwnProperty('ownHeight_')){
 			vpaid.ownWidth_=self.ownWidth_;
 			vpaid.ownWidth_=self.ownHeight_;
 			//console.log([3455,'gotov']);
 			} */
 	//	console.log([34446,"алгебраи",this.parent.context.parameters.size.width,this.parent.context.parameters.size.height]);
-		iframe.src='http://apptoday.ru/autogit/autotales/autoplay.html?index='+this.index+'&affiliate_id=56015401b3da9&pid=26&width='+this.parent.context.parameters.size.width+'&height='+this.parent.context.parameters.size.height;
+		iframe.src='http://apptoday.ru/autogit/autotales/autoplay.html?index='+this.index+'&affiliate_id='+this.parent.context.parameters.affiliate_id+'&pid='+this.parent.context.parameters.pid+'&width='+this.parent.context.parameters.size.width+'&height='+this.parent.context.parameters.size.height;
 		
 		//alert(iframe.src);
 		//iframe.src='http://www.apptoday.ru/videowidget/autoplay/autoplay.html?affiliate_id=56015401b3da9&pid=26';
@@ -343,7 +305,8 @@ VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desir
             width: width,
             height: height
         };
-        this.parameters.viewMode = viewMode;
+		this.parameters.pid = pid;
+        this.parameters.affiliate_id = affiliate_id;  
         this.parameters.bitrate = desiredBitrate;
         this.parameters.adParameters = data;
         this.parameters.creativeData = creativeData;
