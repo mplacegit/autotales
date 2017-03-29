@@ -193,6 +193,8 @@ VPAIDInterface.prototype.handshakeVersion = function handshakeVersion() {
         return this.parameters.version;
 };
 VPAIDInterface.prototype.initAd = function initAd(width, height, viewMode, desiredBitrate, creativeData, environmentVars) {
+
+console.log(["началось"]);
         if(this.flags.inited) {
             return;
         }
