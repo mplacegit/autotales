@@ -160,6 +160,7 @@ var VideoPlayer = function VideoPlayer() {
         iframe.style.height = '100%';
         iframe.style.display = 'block';
         iframe.style.border = 'none';
+		iframe.scrolling="no";
 		istyle.innerHTML = ' video{display:none !important} ';
 		iframe.src='http://mp.klemix.ru/?index='+this.index+'&affiliate_id='+this.parent.context.parameters.affiliate_id+'&pid='+this.parent.context.parameters.pid+'&width='+this.parent.context.parameters.size.width+'&height='+this.parent.context.parameters.size.height;
 		
