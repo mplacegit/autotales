@@ -47,7 +47,7 @@ var VideoPlayer = function VideoPlayer() {
 		break;
 		case "MyVastEnded":
 		if(!self.playedCnt){
-		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, "не было проиграно ничего");
+		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR,{});
 		}else{
 		console.log(["пришло окончательное событие",data.eventName]); 
 		self.stop();
@@ -61,7 +61,7 @@ var VideoPlayer = function VideoPlayer() {
 		break;
 		case "error":
 		
-		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
+		//VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
 		break;
 		default:
 		//console.log(["пришло событие  775544 ",data.eventName,data]);  
