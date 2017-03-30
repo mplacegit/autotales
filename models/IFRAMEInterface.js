@@ -44,7 +44,7 @@ var VideoPlayer = function VideoPlayer() {
 		switch (data.eventName){
 		case "firstQuartile":
 		self.playedCnt++;
-		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_MUTE, self.getMetaData());
+		VideoPlayer.$dispatchEvent.call(self, data.eventName, self.getMetaData());
 		break;
 		case "MyVastEnded":
 		if(!self.playedCnt){
