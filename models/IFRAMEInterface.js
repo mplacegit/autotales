@@ -60,7 +60,7 @@ var VideoPlayer = function VideoPlayer() {
 		case "complete":
 		break;
 		case "error":
-		
+		console.log(['megogo Error',data]);
 		//VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
 		break;
 		default:
