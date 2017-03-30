@@ -1089,9 +1089,7 @@ if(this.thirdPartyFlag) return;
    this.container.style.display='none';
    if(typeof this.collbackFunction =='function'){
    console.log("переход 2");
-
    this.collbackFunction(this.config);
-
    }
 };
 multidispatcher.prototype.sendStatistic = function sendStatistic(data) 
