@@ -48,9 +48,10 @@ var VideoPlayer = function VideoPlayer() {
 		case "MyVastEnded":
 		if(!self.playedCnt){
 		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, "не было проиграно ничего");
-		}
+		}else{
 		console.log(["пришло окончательное событие",data.eventName]); 
 		self.stop();
+		}
 		break;
         case "mute":
 		//console.log(["пришло событие","volumeChange",0]); 
