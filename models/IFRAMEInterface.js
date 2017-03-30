@@ -11,7 +11,7 @@ function $notifyObservers(event) {
         });
 }
 function $mediaEventHandler(event) {
-        //console.log(['все события',event]); 
+        //console.log(['РІСЃРµ СЃРѕР±С‹С‚РёСЏ',event]); 
         event.data = event.data || {};
         var params = {};
         if(event.type == VideoEvent.AD_ERROR) {
@@ -43,11 +43,11 @@ var VideoPlayer = function VideoPlayer() {
 		if(data.hasOwnProperty("eventName")){
 		switch (data.eventName){
 		case "MyVastEnded":
-		console.log(["пришло окончательное событие",data.eventName]); 
+		console.log(["РїСЂРёС€Р»Рѕ РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕРµ СЃРѕР±С‹С‚РёРµ",data.eventName]); 
 		self.stop();
 		break;
         case "mute":
-		//console.log(["пришло событие","volumeChange",0]); 
+		//console.log(["РїСЂРёС€Р»Рѕ СЃРѕР±С‹С‚РёРµ","volumeChange",0]); 
 		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_MUTE, self.getMetaData());
 	    break;
 		case "complete":
@@ -57,7 +57,7 @@ var VideoPlayer = function VideoPlayer() {
 		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
 		break;
 		default:
-		//console.log(["пришло событие  775544 ",data.eventName,data]);  
+		//console.log(["РїСЂРёС€Р»Рѕ СЃРѕР±С‹С‚РёРµ  775544 ",data.eventName,data]);  
 		var tl=VPAIDEvent.convertFromVAST(data.eventName);
 		VideoPlayer.$dispatchEvent.call(self, data.eventName, self.getMetaData());
 		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(data.eventName),data));
@@ -146,7 +146,7 @@ var VideoPlayer = function VideoPlayer() {
 	VideoPlayer.prototype.stop = function stop() {
 	console.log("kontrolog"); 
 	VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_STOP, this.getMetaData());
-	//console.log("остановка ресурса !!!!");
+	//console.log("РѕСЃС‚Р°РЅРѕРІРєР° СЂРµСЃСѓСЂСЃР° !!!!");
 	}
     VideoPlayer.prototype.play = function play() {
         if (this.flags.started || this.flags.stopped) {
@@ -167,7 +167,7 @@ var VideoPlayer = function VideoPlayer() {
 		
 		this.parent.context.parameters.slot.appendChild(istyle); 
 		this.parent.context.parameters.slot.appendChild(iframe); 
-        //console.log(['слот контекст',this.parent.context.parameters.slot]);
+        //console.log(['СЃР»РѕС‚ РєРѕРЅС‚РµРєСЃС‚',this.parent.context.parameters.slot]);
         
 		//
 		
@@ -194,7 +194,7 @@ IFRAMEInterface.prototype.handshakeVersion = function handshakeVersion() {
 };
 IFRAMEInterface.prototype.initAd = function initAd(width, height, viewMode, desiredBitrate, creativeData, environmentVars) {
 
-console.log(["началось"]);
+console.log(["РЅР°С‡Р°Р»РѕСЃСЊ"]);
         if(this.flags.inited) {
             return;
         }
@@ -211,8 +211,8 @@ console.log(["началось"]);
         return $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdError, "Missing mandatory parameters \"pid\" in AdParameters"));
         }
 		var pid=data.pid;
-		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "Олерт - hello "+affiliate_id+" / "+pid));
-        //environmentVars.slot.innerHTML='это всё афёры. не верьте граждане';
+		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "РћР»РµСЂС‚ - hello "+affiliate_id+" / "+pid));
+        //environmentVars.slot.innerHTML='СЌС‚Рѕ РІСЃС‘ Р°С„С‘СЂС‹. РЅРµ РІРµСЂСЊС‚Рµ РіСЂР°Р¶РґР°РЅРµ';
 		
 		 this.parameters.size = {
             width: width,
@@ -238,11 +238,11 @@ console.log(["началось"]);
 	IFRAMEInterface.prototype.startAd = function () {
         if(!this.flags.started) {
             this.flags.started = true;
-			//console.log(['медиаплеер']);
+			//console.log(['РјРµРґРёР°РїР»РµРµСЂ']);
 			this.mediaPlayer.play();
 			//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdStarted, {}));
 			
-            //this.parameters.slot.innerHTML='<span style="color:#FFFFFF">это всё афёры. не верьте граждане</span>';
+            //this.parameters.slot.innerHTML='<span style="color:#FFFFFF">СЌС‚Рѕ РІСЃС‘ Р°С„С‘СЂС‹. РЅРµ РІРµСЂСЊС‚Рµ РіСЂР°Р¶РґР°РЅРµ</span>';
         }
     };
     IFRAMEInterface.prototype.stopAd = function () {
@@ -283,7 +283,7 @@ console.log(["началось"]);
     };
     IFRAMEInterface.prototype.setAdVolume = function (value) {
         if(!this.flags.stopped && this.flags.started) {
-		//console.log("валюе");
+		//console.log("РІР°Р»СЋРµ");
            // this.mediaPlayer.setVolume(value > 1 ? value / 100 : value);
         }
     };

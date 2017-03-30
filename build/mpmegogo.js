@@ -12,7 +12,7 @@ function $notifyObservers(event) {
         });
 }
 function $mediaEventHandler(event) {
-        //console.log(['��� �������',event]); 
+        //console.log(['все события',event]); 
         event.data = event.data || {};
         var params = {};
         if(event.type == VideoEvent.AD_ERROR) {
@@ -44,11 +44,11 @@ var VideoPlayer = function VideoPlayer() {
 		if(data.hasOwnProperty("eventName")){
 		switch (data.eventName){
 		case "MyVastEnded":
-		console.log(["������ ������������� �������",data.eventName]); 
+		console.log(["пришло окончательное событие",data.eventName]); 
 		self.stop();
 		break;
         case "mute":
-		//console.log(["������ �������","volumeChange",0]); 
+		//console.log(["пришло событие","volumeChange",0]); 
 		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_MUTE, self.getMetaData());
 	    break;
 		case "complete":
@@ -58,7 +58,7 @@ var VideoPlayer = function VideoPlayer() {
 		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, data);
 		break;
 		default:
-		//console.log(["������ �������  775544 ",data.eventName,data]);  
+		//console.log(["пришло событие  775544 ",data.eventName,data]);  
 		var tl=VPAIDEvent.convertFromVAST(data.eventName);
 		VideoPlayer.$dispatchEvent.call(self, data.eventName, self.getMetaData());
 		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.convertFromVAST(data.eventName),data));
@@ -147,7 +147,7 @@ var VideoPlayer = function VideoPlayer() {
 	VideoPlayer.prototype.stop = function stop() {
 	console.log("kontrolog"); 
 	VideoPlayer.$dispatchEvent.call(this, VideoEvent.AD_STOP, this.getMetaData());
-	//console.log("��������� ������� !!!!");
+	//console.log("остановка ресурса !!!!");
 	}
     VideoPlayer.prototype.play = function play() {
         if (this.flags.started || this.flags.stopped) {
@@ -168,7 +168,7 @@ var VideoPlayer = function VideoPlayer() {
 		
 		this.parent.context.parameters.slot.appendChild(istyle); 
 		this.parent.context.parameters.slot.appendChild(iframe); 
-        //console.log(['���� ��������',this.parent.context.parameters.slot]);
+        //console.log(['слот контекст',this.parent.context.parameters.slot]);
         
 		//
 		
@@ -195,7 +195,7 @@ IFRAMEInterface.prototype.handshakeVersion = function handshakeVersion() {
 };
 IFRAMEInterface.prototype.initAd = function initAd(width, height, viewMode, desiredBitrate, creativeData, environmentVars) {
 
-console.log(["��������"]);
+console.log(["началось"]);
         if(this.flags.inited) {
             return;
         }
@@ -212,8 +212,8 @@ console.log(["��������"]);
         return $notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdError, "Missing mandatory parameters \"pid\" in AdParameters"));
         }
 		var pid=data.pid;
-		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "����� - hello "+affiliate_id+" / "+pid));
-        //environmentVars.slot.innerHTML='��� ��� �����. �� ������ ��������';
+		//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdLog, "Олерт - hello "+affiliate_id+" / "+pid));
+        //environmentVars.slot.innerHTML='это всё афёры. не верьте граждане';
 		
 		 this.parameters.size = {
             width: width,
@@ -239,11 +239,11 @@ console.log(["��������"]);
 	IFRAMEInterface.prototype.startAd = function () {
         if(!this.flags.started) {
             this.flags.started = true;
-			//console.log(['����������']);
+			//console.log(['медиаплеер']);
 			this.mediaPlayer.play();
 			//$notifyObservers.call(this, new VPAIDEvent(VPAIDEvent.AdStarted, {}));
 			
-            //this.parameters.slot.innerHTML='<span style="color:#FFFFFF">��� ��� �����. �� ������ ��������</span>';
+            //this.parameters.slot.innerHTML='<span style="color:#FFFFFF">это всё афёры. не верьте граждане</span>';
         }
     };
     IFRAMEInterface.prototype.stopAd = function () {
@@ -284,7 +284,7 @@ console.log(["��������"]);
     };
     IFRAMEInterface.prototype.setAdVolume = function (value) {
         if(!this.flags.stopped && this.flags.started) {
-		//console.log("�����");
+		//console.log("валюе");
            // this.mediaPlayer.setVolume(value > 1 ? value / 100 : value);
         }
     };
