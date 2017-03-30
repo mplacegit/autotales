@@ -31,7 +31,7 @@ function $mediaEventHandler(event) {
 		
 }
 var VideoPlayer = function VideoPlayer() {
-
+        this.playedCnt=0;
         this.flags = {
             canSendEvent: true,
             middleEvent: [false, false, false, false, false]
@@ -42,7 +42,13 @@ var VideoPlayer = function VideoPlayer() {
 		this.bridge.addAction("adEvent",function(data){
 		if(data.hasOwnProperty("eventName")){
 		switch (data.eventName){
+		case "firstQuartile":
+		self.playedCnt++;
+		break;
 		case "MyVastEnded":
+		if(!self.playedCnt){
+		VideoPlayer.$dispatchEvent.call(self,VideoEvent.AD_ERROR, "не было проиграно ничего");
+		}
 		console.log(["пришло окончательное событие",data.eventName]); 
 		self.stop();
 		break;
