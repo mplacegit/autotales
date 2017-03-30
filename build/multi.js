@@ -6110,10 +6110,10 @@ JavaScriptVPAID.prototype.load = function load(mediaFiles, parameters) {
 
     return new LiePromise(function loadCreative(resolve, reject) {
         var iframe = document.createElement('iframe');
-		iframe.scrolling="no";
+		
         var script = document.createElement('script');
         var video = document.createElement('video');
-
+        iframe.scrolling="no";
         function cleanup(reason) {
 		
 		    //console.log([123321,'iframe стоп']);
